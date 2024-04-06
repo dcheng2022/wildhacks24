@@ -11,13 +11,11 @@ import { FieldLabel } from "@swc-react/field-label";
 import { Textfield } from "@swc-react/textfield";
 import { Slider } from "@swc-react/slider";
 import React from "react";
-import katex from "katex";
+import Katex from "katex";
 import "./App.css";
 
 const App = ({ addOnUISdk, sandboxProxy }) => {
 	async function generateImage() {
-		const latexInputField = document.getElementById("latex");
-		const latexExpression = latexInputField.value;
 		try {
 			const blob = await fetch("https://t4.ftcdn.net/jpg/00/53/45/31/360_F_53453175_hVgYVz0WmvOXPd9CNzaUcwcibiGao3CL.jpg").then((response) => response.blob());
 			const { document } = addOnUISdk.app;
@@ -28,14 +26,14 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
 	};
 
     function previewKatex () {
-        var element = document.getElementById("mathpreview");
-        katex.render(String.raw`c = \pm\sqrt{a^2 + b^2}`, element, {
+        const element = document.getElementById("mathpreview");
+		const latexInputField = document.getElementById("latex");
+		const latexExpression = latexInputField.value;
+        Katex.render(latexExpression, element, {
             throwOnError: false,
             output: "mathml",
             displayMode: true
         });
-        console.log(element);
-
     }
 
     return (
