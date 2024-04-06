@@ -11,7 +11,7 @@ import { FieldLabel } from "@swc-react/field-label";
 import { Textfield } from "@swc-react/textfield";
 import { Slider } from "@swc-react/slider";
 import React from "react";
-import Katex from "katex";
+import katex from "katex";
 import "./App.css";
 
 const App = ({ addOnUISdk, sandboxProxy }) => {
@@ -25,6 +25,17 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
 		}
 	};
 
+    function previewKatex () {
+        var element = document.getElementById("mathpreview");
+        katex.render(String.raw`c = \pm\sqrt{a^2 + b^2}`, element, {
+            throwOnError: false,
+            output: "mathml",
+            displayMode: true
+        });
+        console.log(element);
+
+    }
+
     return (
         // Please note that the below "<Theme>" component does not react to theme changes in Express.
         // You may use "addOnUISdk.app.ui.theme" to get the current theme and react accordingly.
@@ -36,6 +47,13 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
 				<Textfield id="latex" size="m" placeholder="Enter LaTeX expression">
 				</Textfield>
 			</div>
+            <div className="container" id="mathpreview">
+            </div>
+            <div className="container">
+                <Button onClick={previewKatex} size="l">
+                    Preview
+                </Button>
+            </div>
 			<div className="container">
 				<FieldLabel for="slider" size="l">
 					Font Size
