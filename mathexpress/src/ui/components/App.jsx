@@ -11,13 +11,18 @@ import { FieldLabel } from "@swc-react/field-label";
 import { Textfield } from "@swc-react/textfield";
 import { Slider } from "@swc-react/slider";
 import React from "react";
+import Katex from "katex";
 import "./App.css";
 
 const App = ({ addOnUISdk, sandboxProxy }) => {
 	async function generateImage() {
 		const { document } = addOnUISdk.app;
-		const blob = await fetch("https://t4.ftcdn.net/jpg/00/53/45/31/360_F_53453175_hVgYVz0WmvOXPd9CNzaUcwcibiGao3CL.jpg").then((response) => response.blob());
-		document.addImage(blob);
+		try {
+			const blob = await fetch("https://t4.ftcdn.net/jpg/00/53/45/31/360_F_53453175_hVgYVz0WmvOXPd9CNzaUcwcibiGao3CL.jpg").then((response) => response.blob());
+			document.addImage(blob);
+		} catch (error) {
+			console.log("Failed to add generated image");
+		}
 	};
 
     return (
