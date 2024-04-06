@@ -14,6 +14,12 @@ import React from "react";
 import "./App.css";
 
 const App = ({ addOnUISdk, sandboxProxy }) => {
+	async function generateImage() {
+		const { document } = addOnUISdk.app;
+		const blob = await fetch("https://t4.ftcdn.net/jpg/00/53/45/31/360_F_53453175_hVgYVz0WmvOXPd9CNzaUcwcibiGao3CL.jpg").then((response) => response.blob());
+		document.addImage(blob);
+	};
+
     return (
         // Please note that the below "<Theme>" component does not react to theme changes in Express.
         // You may use "addOnUISdk.app.ui.theme" to get the current theme and react accordingly.
@@ -33,7 +39,7 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
 				</Slider>
 			</div>
             <div className="container">
-                <Button size='l' variant="primary">
+                <Button onClick={generateImage} size="l">
                     Add to design
                 </Button>
             </div>
