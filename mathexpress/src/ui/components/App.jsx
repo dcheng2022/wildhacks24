@@ -32,6 +32,11 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
 				<Slider editable>
 				</Slider>
 			</div>
+            <div className="container">
+                <Button size='l' variant="primary">
+                    Add to design
+                </Button>
+            </div>
         </Theme>
     );
 };
