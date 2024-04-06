@@ -7,14 +7,12 @@ import "@spectrum-web-components/theme/express/theme-light.js";
 // https://opensource.adobe.com/spectrum-web-components/using-swc-react/
 import { Button } from "@swc-react/button";
 import { Theme } from "@swc-react/theme";
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 
-const App = ({ addOnUISdk }) => {
-    const [buttonLabel, setButtonLabel] = useState("Click me");
-
+const App = ({ addOnUISdk, sandboxProxy }) => {
     function handleClick() {
-        setButtonLabel("Clicked");
+        sandboxProxy.createRectangle();
     }
 
     return (
@@ -23,7 +21,7 @@ const App = ({ addOnUISdk }) => {
         <Theme theme="express" scale="medium" color="light">
             <div className="container">
                 <Button size="m" onClick={handleClick}>
-                    {buttonLabel}
+                    Create Rectangle
                 </Button>
             </div>
         </Theme>

@@ -1,5 +1,5 @@
 {
-    "testId": "23e45818-d646-4e80-a4f2-3b9e34fea50a",
+    "testId": "017ce9e1-65ad-4104-a8dd-1eb5790140a7",
     "name": "Mathexpress",
     "version": "1.0.0",
     "manifestVersion": 2,
@@ -15,7 +15,8 @@
         {
             "type": "panel",
             "id": "panel1",
-            "main": "index.html"
+            "main": "index.html",
+            "documentSandbox": "code.js"
         }
     ]
 }
