@@ -16,9 +16,11 @@ import "./App.css";
 
 const App = ({ addOnUISdk, sandboxProxy }) => {
 	async function generateImage() {
-		const { document } = addOnUISdk.app;
+		const latexInputField = document.getElementById("latex");
+		const latexExpression = latexInputField.value;
 		try {
 			const blob = await fetch("https://t4.ftcdn.net/jpg/00/53/45/31/360_F_53453175_hVgYVz0WmvOXPd9CNzaUcwcibiGao3CL.jpg").then((response) => response.blob());
+			const { document } = addOnUISdk.app;
 			document.addImage(blob);
 		} catch (error) {
 			console.log("Failed to add generated image");
