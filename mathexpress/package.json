@@ -21,6 +21,7 @@
         "@swc-react/textfield": "^0.42.2",
         "@swc-react/theme": "0.39.4",
         "install": "^0.13.0",
+        "katex": "^0.16.10",
         "npm": "^10.5.1",
         "react": "18.2.0",
         "react-dom": "18.2.0"
