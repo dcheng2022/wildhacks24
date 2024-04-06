@@ -9,6 +9,7 @@ import { Button } from "@swc-react/button";
 import { Theme } from "@swc-react/theme";
 import { FieldLabel } from "@swc-react/field-label";
 import { Textfield } from "@swc-react/textfield";
+import { Slider } from "@swc-react/slider";
 import React from "react";
 import "./App.css";
 
@@ -23,6 +24,13 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
 				</FieldLabel>
 				<Textfield id="latex" size="m" placeholder="Enter LaTeX equation">
 				</Textfield>
+			</div>
+			<div className="container">
+				<FieldLabel for="slider" size="m">
+					Font Size
+				</FieldLabel>
+				<Slider editable>
+				</Slider>
 			</div>
         </Theme>
     );
