@@ -13,6 +13,7 @@ import { Theme } from "@swc-react/theme";
 import { FieldLabel } from "@swc-react/field-label";
 import { Textfield } from "@swc-react/textfield";
 import { Slider } from "@swc-react/slider";
+import { Switch } from "@swc-react/switch"
 import React, {useState} from "react";
 import Katex from "katex";
 import "./App.css";
@@ -21,7 +22,8 @@ import domtoimage from 'dom-to-image-more';
 
 const App = ({ addOnUISdk, sandboxProxy }) => {
     let [sliderValue, setSliderValue] = useState(1);
-    
+    let [displayStyle, setDisplayStyle] = useState(true);
+
     function previewKatex () {
         const mathprev = document.getElementById("mathpreview");
 		const latexInputField = document.getElementById("latex");
@@ -29,7 +31,7 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
         Katex.render(latexExpression, mathprev, {
             throwOnError: false,
             output: "mathml",
-            displayMode: true
+            displayMode: displayStyle
         });
         updateFontSize(mathprev,2);
     }
@@ -98,6 +100,9 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
                 <Button onClick={previewKatex} size="l">
                     Preview
                 </Button>
+            </div>
+            <div className="container">
+                <Switch checked={displayStyle} onInput={(e) => setDisplayStyle(!displayStyle)} size='m'>Render in display style</Switch>
             </div>
 			<div className="container">
 				<Slider value = {sliderValue} min={1} max={10} step = "0.1" label="Scale" onInput={handleSliderChange} />
