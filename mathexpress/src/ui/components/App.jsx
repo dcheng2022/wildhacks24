@@ -17,6 +17,9 @@ import React, {useState} from "react";
 import Katex from "katex";
 import "./App.css";
 
+import html2canvas from 'html2canvas';
+import domtoimage from 'dom-to-image';
+
 const App = ({ addOnUISdk, sandboxProxy }) => {
     
 	async function generateImage() {
@@ -40,6 +43,28 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
         });
     }
 
+
+    function previewCanvas () {
+        const mathprev = document.getElementById("mathpreview");
+        const canvasprev = document.getElementById("canvaspreview");
+
+        html2canvas(mathprev).then(function(canvas) {
+            const newCanvas = document.createElement('canvas');
+            canvasprev.appendChild(newCanvas);
+            const ctx = newCanvas.getContext('2d');
+            ctx.drawImage(canvas,0,0);
+        })
+    }
+
+    function previewBlob () {
+        const mathprev = document.getElementById("mathpreview");
+        domtoimage.toBlob(mathprev, {height: 2*mathprev.clientHeight, width: 2*mathprev.clientWidth}).then(function (blob) {
+            const { document } = addOnUISdk.app;
+			document.addImage(blob);
+        });
+    }
+
+
     let [sliderValue, setSliderValue] = useState(50);
     
     function handleSliderChange (event) {
@@ -48,6 +73,7 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
         mathprev.style.fontSize = event.target.value + "px";
 
     }
+    
 
     return (
         // Please note that the below "<Theme>" component does not react to theme changes in Express.
@@ -63,9 +89,21 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
 
             <div className="container" id="mathpreview">
             </div>
+            <div className="container" id="canvaspreview">
+            </div>
             <div className="container">
                 <Button onClick={previewKatex} size="l">
-                    Preview
+                    Preview HTML
+                </Button>
+            </div>
+            <div className="container">
+                <Button onClick={previewCanvas} size="l">
+                    Preview Canvas
+                </Button>
+            </div>
+            <div className="container">
+                <Button onClick={previewBlob} size="l">
+                    Preview blob
                 </Button>
             </div>
 			<div className="container">

@@ -8,3 +8,7 @@
     align-self: center;
     font-size: 50px;
 }
+#canvaspreview {
+    align-self: center;
+    align-items: center;
+}
