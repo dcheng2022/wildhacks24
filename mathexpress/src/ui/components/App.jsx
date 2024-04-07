@@ -74,7 +74,7 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
                 const { document } = addOnUISdk.app;
                 document.addImage(blob);
                 mathprev.style.fontSize=fontSize+"px";
-            });
+            }).then( () => {previewKatex()});
 		} catch (error) {
 			console.log("Failed to add generated image");
 		}
@@ -96,7 +96,7 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
             </div>
             <div className="container">
                 <Button onClick={previewKatex} size="l">
-                    Preview HTML
+                    Preview
                 </Button>
             </div>
 			<div className="container">
