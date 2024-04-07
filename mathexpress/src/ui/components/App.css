@@ -12,3 +12,8 @@
     align-self: center;
     align-items: center;
 }
+
+.katex-display {
+    margin-top: auto;
+    margin-bottom: auto;
+}

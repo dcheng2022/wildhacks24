@@ -30,7 +30,7 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
 		const latexExpression = latexInputField.value;
         Katex.render(latexExpression, mathprev, {
             throwOnError: false,
-            output: "mathml",
+            output: "html",
             displayMode: displayStyle
         });
         updateFontSize(mathprev,2);
