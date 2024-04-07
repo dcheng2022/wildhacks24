@@ -17,21 +17,11 @@ import React, {useState} from "react";
 import Katex from "katex";
 import "./App.css";
 
-import html2canvas from 'html2canvas';
-import domtoimage from 'dom-to-image';
+import domtoimage from 'dom-to-image-more';
 
 const App = ({ addOnUISdk, sandboxProxy }) => {
+    let [sliderValue, setSliderValue] = useState(1);
     
-	async function generateImage() {
-		try {
-			const blob = await fetch("https://t4.ftcdn.net/jpg/00/53/45/31/360_F_53453175_hVgYVz0WmvOXPd9CNzaUcwcibiGao3CL.jpg").then((response) => response.blob());
-			const { document } = addOnUISdk.app;
-			document.addImage(blob);
-		} catch (error) {
-			console.log("Failed to add generated image");
-		}
-	};
-
     function previewKatex () {
         const mathprev = document.getElementById("mathpreview");
 		const latexInputField = document.getElementById("latex");
@@ -41,39 +31,54 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
             output: "mathml",
             displayMode: true
         });
+        updateFontSize(mathprev,2);
+    }
+
+    function updateFontSize (mathprev,n) {
+        var new_width = mathprev.scrollWidth;
+        var width = mathprev.clientWidth;
+
+        var style = window.getComputedStyle(mathprev);
+        var fontSize = parseFloat(style.fontSize);
+        var new_fontSize = width/new_width * fontSize;
+        
+
+        if (new_fontSize==fontSize && n>0) {
+            mathprev.style.fontSize="100px";
+            updateFontSize(mathprev,n-1);
+        } else {
+            mathprev.style.fontSize=new_fontSize+"px";
+        }
     }
 
 
-    function previewCanvas () {
-        const mathprev = document.getElementById("mathpreview");
-        const canvasprev = document.getElementById("canvaspreview");
-
-        html2canvas(mathprev).then(function(canvas) {
-            const newCanvas = document.createElement('canvas');
-            canvasprev.appendChild(newCanvas);
-            const ctx = newCanvas.getContext('2d');
-            ctx.drawImage(canvas,0,0);
-        })
-    }
-
-    function previewBlob () {
-        const mathprev = document.getElementById("mathpreview");
-        domtoimage.toBlob(mathprev, {height: 2*mathprev.clientHeight, width: 2*mathprev.clientWidth}).then(function (blob) {
-            const { document } = addOnUISdk.app;
-			document.addImage(blob);
-        });
-    }
-
-
-    let [sliderValue, setSliderValue] = useState(50);
     
     function handleSliderChange (event) {
         const mathprev = document.getElementById("mathpreview");
         setSliderValue(event.target.value);
-        mathprev.style.fontSize = event.target.value + "px";
+        //mathprev.style.fontSize = event.target.value + "px";
 
     }
     
+	function generateImage() {
+		try {
+            const mathprev = document.getElementById("mathpreview");
+            var mathprevstyle = window.getComputedStyle(mathprev);
+            var fontSize = parseFloat(mathprevstyle.fontSize);
+            const katexprev = mathprev.getElementsByClassName("katex")[0];
+            mathprev.style.fontSize=fontSize*sliderValue+"px";
+            var scrollWidth = katexprev.scrollWidth;
+            var scrollHeight = katexprev.scrollHeight;
+            katexprev.style.display="none";
+            domtoimage.toBlob(katexprev, {width: scrollWidth, height: scrollHeight, style: {display: 'block'}}).then(function (blob) {
+                const { document } = addOnUISdk.app;
+                document.addImage(blob);
+                mathprev.style.fontSize=fontSize+"px";
+            });
+		} catch (error) {
+			console.log("Failed to add generated image");
+		}
+	};
 
     return (
         // Please note that the below "<Theme>" component does not react to theme changes in Express.
@@ -89,25 +94,13 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
 
             <div className="container" id="mathpreview">
             </div>
-            <div className="container" id="canvaspreview">
-            </div>
             <div className="container">
                 <Button onClick={previewKatex} size="l">
                     Preview HTML
                 </Button>
             </div>
-            <div className="container">
-                <Button onClick={previewCanvas} size="l">
-                    Preview Canvas
-                </Button>
-            </div>
-            <div className="container">
-                <Button onClick={previewBlob} size="l">
-                    Preview blob
-                </Button>
-            </div>
 			<div className="container">
-				<Slider value = {sliderValue} min={10} max={100} editable label="Font Size" onInput={handleSliderChange} />
+				<Slider value = {sliderValue} min={1} max={10} step = "0.1" label="Scale" onInput={handleSliderChange} />
 			</div>
             <div className="container">
                 <Button variant="primary" onClick={generateImage} size="l">
