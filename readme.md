@@ -1,0 +1,1 @@
+(MathTyper)[./Banner.jpg]
