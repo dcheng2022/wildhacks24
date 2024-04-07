@@ -39,11 +39,9 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
     function updateFontSize (mathprev,n) {
         let new_width = mathprev.scrollWidth;
         let width = mathprev.clientWidth;
-
         let style = window.getComputedStyle(mathprev);
         let fontSize = parseFloat(style.fontSize);
         let new_fontSize = width/new_width * fontSize;
-        
 
         if (new_fontSize==fontSize && n>0) {
             mathprev.style.fontSize="100px";
@@ -52,14 +50,11 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
             mathprev.style.fontSize=new_fontSize+"px";
         }
     }
-
-
     
     function handleSliderChange (event) {
         const mathprev = document.getElementById("mathpreview");
         setSliderValue(event.target.value);
         //mathprev.style.fontSize = event.target.value + "px";
-
     }
     
 	function generateImage() {
