@@ -37,12 +37,12 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
     }
 
     function updateFontSize (mathprev,n) {
-        var new_width = mathprev.scrollWidth;
-        var width = mathprev.clientWidth;
+        let new_width = mathprev.scrollWidth;
+        let width = mathprev.clientWidth;
 
-        var style = window.getComputedStyle(mathprev);
-        var fontSize = parseFloat(style.fontSize);
-        var new_fontSize = width/new_width * fontSize;
+        let style = window.getComputedStyle(mathprev);
+        let fontSize = parseFloat(style.fontSize);
+        let new_fontSize = width/new_width * fontSize;
         
 
         if (new_fontSize==fontSize && n>0) {
@@ -65,12 +65,12 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
 	function generateImage() {
 		try {
             const mathprev = document.getElementById("mathpreview");
-            var mathprevstyle = window.getComputedStyle(mathprev);
-            var fontSize = parseFloat(mathprevstyle.fontSize);
+            let mathprevstyle = window.getComputedStyle(mathprev);
+            let fontSize = parseFloat(mathprevstyle.fontSize);
             const katexprev = mathprev.getElementsByClassName("katex")[0];
             mathprev.style.fontSize=fontSize*sliderValue+"px";
-            var scrollWidth = katexprev.scrollWidth;
-            var scrollHeight = katexprev.scrollHeight;
+            let scrollWidth = katexprev.scrollWidth;
+            let scrollHeight = katexprev.scrollHeight;
             katexprev.style.display="none";
             domtoimage.toBlob(katexprev, {width: scrollWidth, height: scrollHeight, style: {display: 'block'}}).then(function (blob) {
                 const { document } = addOnUISdk.app;
